@@ -1,0 +1,122 @@
+Estrutura do projeto
+Java-Design-Patterns/
+│
+├─ README.md
+├─ pom.xml
+└─ src/
+    └─ main/
+        └─ java/
+            └─ com/
+                └─ example/
+                    └─ designpatterns/
+                        ├─ singleton/
+                        │   └─ SingletonExample.java
+                        ├─ factory/
+                        │   └─ FactoryExample.java
+                        ├─ observer/
+                        │   └─ ObserverExample.java
+                        └─ strategy/
+                            └─ StrategyExample.java
+
+Exemplos de código
+1. Singleton
+package com.example.designpatterns.singleton;
+
+public class SingletonExample {
+    private static SingletonExample instance;
+
+    private SingletonExample() {}
+
+    public static SingletonExample getInstance() {
+        if (instance == null) {
+            instance = new SingletonExample();
+        }
+        return instance;
+    }
+
+    public void showMessage() {
+        System.out.println("Hello from Singleton!");
+    }
+}
+
+2. Factory
+package com.example.designpatterns.factory;
+
+interface Shape {
+    void draw();
+}
+
+class Circle implements Shape {
+    public void draw() { System.out.println("Drawing Circle"); }
+}
+
+class Rectangle implements Shape {
+    public void draw() { System.out.println("Drawing Rectangle"); }
+}
+
+class ShapeFactory {
+    public Shape getShape(String shapeType) {
+        if ("CIRCLE".equalsIgnoreCase(shapeType)) return new Circle();
+        if ("RECTANGLE".equalsIgnoreCase(shapeType)) return new Rectangle();
+        return null;
+    }
+}
+
+3. Observer
+package com.example.designpatterns.observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+interface Observer {
+    void update(String message);
+}
+
+class ConcreteObserver implements Observer {
+    private String name;
+    public ConcreteObserver(String name) { this.name = name; }
+    public void update(String message) { System.out.println(name + " received: " + message); }
+}
+
+class Subject {
+    private List<Observer> observers = new ArrayList<>();
+    public void addObserver(Observer o) { observers.add(o); }
+    public void notifyObservers(String message) {
+        for (Observer o : observers) o.update(message);
+    }
+}
+
+4. Strategy
+package com.example.designpatterns.strategy;
+
+interface PaymentStrategy {
+    void pay(int amount);
+}
+
+class CreditCardPayment implements PaymentStrategy {
+    public void pay(int amount) { System.out.println("Paid " + amount + " using Credit Card"); }
+}
+
+class PayPalPayment implements PaymentStrategy {
+    public void pay(int amount) { System.out.println("Paid " + amount + " using PayPal"); }
+}
+
+class ShoppingCart {
+    private PaymentStrategy paymentStrategy;
+    public void setPaymentStrategy(PaymentStrategy ps) { this.paymentStrategy = ps; }
+    public void checkout(int amount) { paymentStrategy.pay(amount); }
+}
+
+README.md
+# Java Design Patterns
+
+Exemplos de padrões de design clássicos em Java:
+
+- Singleton
+- Factory
+- Observer
+- Strategy
+
+Como usar:
+- Compile com `javac`
+- Execute as classes principais para testar os exemplos.
